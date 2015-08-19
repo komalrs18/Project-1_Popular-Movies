@@ -25,7 +25,7 @@
     <string name="pref_sorting_default_value" translatable="false">popular</string>
 
     <!-- api -->
-    <string name="api_key">5d04854b4bbbca8459f508321e0e6c38</string>
+    <string name="api_key"></string>
     <string name="api_poster_default_size">w154</string>
 
 </resources>
