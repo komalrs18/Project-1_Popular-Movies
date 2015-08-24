@@ -2,60 +2,46 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\Komal\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\22.2.0\support-annotations-22.2.0.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="66b42a1f3eb7676070b7ef7f14b603483aecbee1">
-        <dex dex="C:\Users\Komal\Videos\Android Development Nenodegree\Projects\Project 1\Project 1_Popular Movies\build\intermediates\pre-dexed\debug\support-annotations-22.2.0-989da405b2e016affd3acdbc397f083ccccffbf8.jar" />
-    </item>
-    <item
-        jar="C:\Users\Komal\Videos\Android Development Nenodegree\Projects\Project 1\Project 1_Popular Movies\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\jars\libs\internal_impl-22.2.0.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="57f2ab85c164ff1676ec64dee787981c046fab79">
-        <dex dex="C:\Users\Komal\Videos\Android Development Nenodegree\Projects\Project 1\Project 1_Popular Movies\build\intermediates\pre-dexed\debug\internal_impl-22.2.0-8d312f1acf74d5cbcb46775286f878369ac8d959.jar" />
-    </item>
-    <item
-        jar="C:\Users\Komal\AndroidStudioProjects\PopularMoviesProject1\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\jars\libs\internal_impl-22.2.0.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="57f2ab85c164ff1676ec64dee787981c046fab79">
-        <dex dex="C:\Users\Komal\AndroidStudioProjects\PopularMoviesProject1\app\build\intermediates\pre-dexed\debug\internal_impl-22.2.0-7bfecab7269081b5797605b045657222bfa885ab.jar" />
-    </item>
-    <item
-        jar="C:\Users\Komal\AndroidStudioProjects\PopularMoviesProject1\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\jars\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="1ee588ff2c4daf7b97c1cbf922a6c7f027285c2f">
-        <dex dex="C:\Users\Komal\AndroidStudioProjects\PopularMoviesProject1\app\build\intermediates\pre-dexed\debug\classes-925d4739302726c20df13daf8568a234e534e9c7.jar" />
-    </item>
-    <item
-        jar="C:\Users\Komal\Videos\Android Development Nenodegree\Projects\Project 1\Project 1_Popular Movies\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\jars\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="1ee588ff2c4daf7b97c1cbf922a6c7f027285c2f">
-        <dex dex="C:\Users\Komal\Videos\Android Development Nenodegree\Projects\Project 1\Project 1_Popular Movies\build\intermediates\pre-dexed\debug\classes-291b9ba0dd7bd470ace22d988633ca863dd6ac22.jar" />
-    </item>
-    <item
-        jar="C:\Users\Komal\Videos\Android Development Nenodegree\Projects\Project 1\Project 1_Popular Movies\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.2.0\jars\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="73753982da6bde518f3a4c6b372749981d14d1a0">
-        <dex dex="C:\Users\Komal\Videos\Android Development Nenodegree\Projects\Project 1\Project 1_Popular Movies\build\intermediates\pre-dexed\debug\classes-f707af91f35250e97825b7c400d13b66c8207b92.jar" />
-    </item>
-    <item
-        jar="C:\Users\Komal\AndroidStudioProjects\PopularMoviesProject1\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.2.0\jars\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="73753982da6bde518f3a4c6b372749981d14d1a0">
-        <dex dex="C:\Users\Komal\AndroidStudioProjects\PopularMoviesProject1\app\build\intermediates\pre-dexed\debug\classes-4ae48411e12ed5f396aeb3f3b23f97b505936e55.jar" />
-    </item>
-    <item
         jar="C:\Users\Komal\.gradle\caches\modules-2\files-2.1\com.squareup.picasso\picasso\2.5.2\7446d06ec8d4f7ffcc53f1da37c95f200dcb9387\picasso-2.5.2.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="7446d06ec8d4f7ffcc53f1da37c95f200dcb9387">
-        <dex dex="C:\Users\Komal\Videos\Android Development Nenodegree\Projects\Project 1\Project 1_Popular Movies\build\intermediates\pre-dexed\debug\picasso-2.5.2-8a324dd7ffcadfd508c1b4898a53aacd0b65cc13.jar" />
+        <dex dex="C:\Users\Komal\Videos\Android Development Nenodegree\Projects\Project 1\Project 1_Popular Movies - Copy\app\build\intermediates\pre-dexed\debug\picasso-2.5.2-8a324dd7ffcadfd508c1b4898a53aacd0b65cc13.jar" />
+    </item>
+    <item
+        jar="C:\Users\Komal\Videos\Android Development Nenodegree\Projects\Project 1\Project 1_Popular Movies - Copy\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.2.0\jars\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="73753982da6bde518f3a4c6b372749981d14d1a0">
+        <dex dex="C:\Users\Komal\Videos\Android Development Nenodegree\Projects\Project 1\Project 1_Popular Movies - Copy\app\build\intermediates\pre-dexed\debug\classes-2ef1b7e02e30e7faa5d71980d0098528cab64cff.jar" />
+    </item>
+    <item
+        jar="C:\Users\Komal\.gradle\caches\modules-2\files-2.1\com.github.bumptech.glide\glide\3.6.0\a7537446a030da8eb0da4c71424d16c2589f6c4a\glide-3.6.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="a7537446a030da8eb0da4c71424d16c2589f6c4a">
+        <dex dex="C:\Users\Komal\Videos\Android Development Nenodegree\Projects\Project 1\Project 1_Popular Movies - Copy\app\build\intermediates\pre-dexed\debug\glide-3.6.0-ff0865272a8c1005e2804e7d769db385dd992602.jar" />
+    </item>
+    <item
+        jar="C:\Users\Komal\Videos\Android Development Nenodegree\Projects\Project 1\Project 1_Popular Movies - Copy\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\jars\libs\internal_impl-22.2.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="57f2ab85c164ff1676ec64dee787981c046fab79">
+        <dex dex="C:\Users\Komal\Videos\Android Development Nenodegree\Projects\Project 1\Project 1_Popular Movies - Copy\app\build\intermediates\pre-dexed\debug\internal_impl-22.2.0-e0fbc94dce022bf0fe4343cda377c4af4b80f669.jar" />
+    </item>
+    <item
+        jar="C:\Users\Komal\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\22.2.0\support-annotations-22.2.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="66b42a1f3eb7676070b7ef7f14b603483aecbee1">
+        <dex dex="C:\Users\Komal\Videos\Android Development Nenodegree\Projects\Project 1\Project 1_Popular Movies - Copy\app\build\intermediates\pre-dexed\debug\support-annotations-22.2.0-989da405b2e016affd3acdbc397f083ccccffbf8.jar" />
+    </item>
+    <item
+        jar="C:\Users\Komal\Videos\Android Development Nenodegree\Projects\Project 1\Project 1_Popular Movies - Copy\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\jars\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="1ee588ff2c4daf7b97c1cbf922a6c7f027285c2f">
+        <dex dex="C:\Users\Komal\Videos\Android Development Nenodegree\Projects\Project 1\Project 1_Popular Movies - Copy\app\build\intermediates\pre-dexed\debug\classes-96d9ea9f5d0da5b1fa3487aed25bdc13b295e4d2.jar" />
     </item>
 
 </items>

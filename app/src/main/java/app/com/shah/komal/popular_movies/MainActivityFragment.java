@@ -4,17 +4,18 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.TextView;
-import android.widget.Toast;
+
+import app.com.shah.komal.popular_movies.adapters.MovieGridAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,68 +28,181 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
+
 
 /**
  * A placeholder fragment containing a simple view.
  */
 public class MainActivityFragment extends Fragment {
 
+    private GridView mGridView;
+    private MovieGridAdapter mMovieGridAdapter;
+
+    private static final String SORT_SETTING_KEY = "sort_setting";
+    private static final String POPULAR_KEY = "popular_desc";
+    private static final String RATING_KEY = "vote_average";
+    private static final String MOVIES_KEY = "movies";
+
+    private String mSort = POPULAR_KEY;
+
+    private ArrayList<Movie> mMovies = null;
+
     public MainActivityFragment() {
     }
 
-    public static final int MAX_PAGES = 100;
-    private boolean mIsLoading = false;
-    private int mPagesLoaded = 0;
-    private TextView mLoading;
-    private ImageAdapter mImages;
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // Add this line in order for this fragment to handle menu events.
+        setHasOptionsMenu(true);
+    }
 
-    private class FetchPageTask extends AsyncTask<Integer, Void, Collection<Movie>> {
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_fragment_main, menu);
+        MenuItem sort_menu_popular = menu.findItem(R.id.sort_menu_popular);
+        MenuItem sort_menu_rating = menu.findItem(R.id.sort_menu_rating);
+        if (mSort.contentEquals(POPULAR_KEY)) {
+            if (!sort_menu_popular.isChecked())
+                sort_menu_popular.setChecked(true);
+        }
+        else {
+            if (!sort_menu_rating.isChecked())
+                sort_menu_rating.setChecked(true);
+        }
+    }
 
-        public final String LOG_TAG = FetchPageTask.class.getSimpleName();
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.sort_menu_popular:
+                if (item.isChecked())
+                    item.setChecked(false);
+                else
+                    item.setChecked(true);
+                mSort = POPULAR_KEY;
+                updateMovies(mSort);
+                return true;
+            case R.id.sort_menu_rating:
+                if (item.isChecked())
+                    item.setChecked(false);
+                else
+                    item.setChecked(true);
+                mSort = RATING_KEY;
+                updateMovies(mSort);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.fragment_main, container, false);
+
+        mGridView = (GridView) view.findViewById(R.id.gridview_movies);
+
+        mMovieGridAdapter = new MovieGridAdapter(getActivity());
+        mGridView.setAdapter(mMovieGridAdapter);
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Movie movie = mMovieGridAdapter.getItem(position);
+                Intent intent = new Intent(getActivity(), DetailActivity.class)
+                        .putExtra(DetailActivityFragment.DETAIL_MOVIE, movie);
+                startActivity(intent);
+            }
+        });
+
+        if (savedInstanceState != null) {
+            if (savedInstanceState.containsKey(SORT_SETTING_KEY)) {
+                mSort = savedInstanceState.getString(SORT_SETTING_KEY);
+            }
+            if (savedInstanceState.containsKey(MOVIES_KEY)) {
+                mMovies = savedInstanceState.getParcelableArrayList(MOVIES_KEY);
+                for (Movie movie : mMovies) {
+                    mMovieGridAdapter.add(movie);
+                }
+            } else {
+                updateMovies(mSort);
+            }
+        } else {
+            updateMovies(mSort);
+        }
+
+        return view;
+    }
+
+    private void updateMovies(String sort_by) {
+        FetchMoviesTask moviesTask = new FetchMoviesTask();
+        moviesTask.execute(sort_by);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        if (!mSort.contentEquals(POPULAR_KEY)) {
+            outState.putString(SORT_SETTING_KEY, mSort);
+        }
+        if (mMovies != null) {
+            outState.putParcelableArrayList(MOVIES_KEY, mMovies);
+        }
+        super.onSaveInstanceState(outState);
+    }
+
+    public class FetchMoviesTask extends AsyncTask<String, Void, List<Movie>> {
+
+        private final String LOG_TAG = FetchMoviesTask.class.getSimpleName();
+
+        private List<Movie> getMoviesDataFromJson(String jsonStr) throws JSONException {
+            JSONObject movieJson = new JSONObject(jsonStr);
+            JSONArray movieArray = movieJson.getJSONArray("results");
+
+            List<Movie> results = new ArrayList<>();
+
+            for(int i = 0; i < movieArray.length(); i++) {
+                JSONObject movie = movieArray.getJSONObject(i);
+                Movie movieModel = new Movie(movie);
+                results.add(movieModel);
+            }
+
+            return results;
+        }
 
         @Override
-        protected Collection<Movie> doInBackground(Integer... params) {
+        protected List<Movie> doInBackground(String... params) {
+
             if (params.length == 0) {
                 return null;
             }
 
-            int page = params[0];
             HttpURLConnection urlConnection = null;
             BufferedReader reader = null;
-            String responseJsonStr = null;
+
+            String jsonStr = null;
 
             try {
-                final String API_BASE_URL = "http://api.themoviedb.org/3/movie/";
-                final String API_PARAM_PAGE = "page";
-                final String API_PARAM_KEY = "api_key";
-                final String API_SORTING = PreferenceManager
-                        .getDefaultSharedPreferences(getActivity())
-                        .getString(
-                                getString(R.string.pref_sorting_key),
-                                getString(R.string.pref_sorting_default_value)
-                        );
+                final String BASE_URL = "http://api.themoviedb.org/3/discover/movie?";
+                final String SORT_BY_PARAM = "sort_by";
+                final String API_KEY_PARAM = "api_key";
 
-                Uri builtUri = Uri.parse(API_BASE_URL).buildUpon()
-                        .appendPath(API_SORTING)
-                        .appendQueryParameter(API_PARAM_PAGE, String.valueOf(page))
-                        .appendQueryParameter(API_PARAM_KEY, getString(R.string.api_key))
+                Uri builtUri = Uri.parse(BASE_URL).buildUpon()
+                        .appendQueryParameter(SORT_BY_PARAM, params[0])
+                        .appendQueryParameter(API_KEY_PARAM, getString(R.string.api_key))
                         .build();
 
-
-                Log.d(LOG_TAG, "QUERY URI: " + builtUri.toString());
                 URL url = new URL(builtUri.toString());
 
-                // Create the request to themoviedb api, and open the connection
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
                 urlConnection.connect();
 
-                // Read the input stream into a String
                 InputStream inputStream = urlConnection.getInputStream();
                 StringBuffer buffer = new StringBuffer();
                 if (inputStream == null) {
-                    // Nothing to do.
                     return null;
                 }
                 reader = new BufferedReader(new InputStreamReader(inputStream));
@@ -102,13 +216,11 @@ public class MainActivityFragment extends Fragment {
                 }
 
                 if (buffer.length() == 0) {
-                    // Stream was empty.  No point in parsing.
                     return null;
                 }
-                responseJsonStr = buffer.toString();
-
-            } catch (Exception ex) {
-                Log.e(LOG_TAG, "Error", ex);
+                jsonStr = buffer.toString();
+            } catch (IOException e) {
+                Log.e(LOG_TAG, "Error ", e);
                 return null;
             } finally {
                 if (urlConnection != null) {
@@ -124,141 +236,28 @@ public class MainActivityFragment extends Fragment {
             }
 
             try {
-                return fetchMoviesFromJson(responseJsonStr);
-            } catch (JSONException ex) {
-                Log.d(LOG_TAG, "Can't parse JSON: " + responseJsonStr, ex);
-                return null;
-            }
-        }
-
-        private Collection<Movie> fetchMoviesFromJson(String jsonStr) throws JSONException {
-            final String KEY_MOVIES = "results";
-
-            JSONObject json = new JSONObject(jsonStr);
-            JSONArray movies = json.getJSONArray(KEY_MOVIES);
-            ArrayList result = new ArrayList<>();
-
-            for (int i = 0; i < movies.length(); i++) {
-                result.add(Movie.fromJson(movies.getJSONObject(i)));
+                return getMoviesDataFromJson(jsonStr);
+            } catch (JSONException e) {
+                Log.e(LOG_TAG, e.getMessage(), e);
+                e.printStackTrace();
             }
 
-            return result;
+            // This will only happen if there was an error getting or parsing the forecast.
+            return null;
         }
 
         @Override
-        protected void onPostExecute(Collection<Movie> xs) {
-            if (xs == null) {
-                Toast.makeText(
-                        getActivity(),
-                        getString(R.string.server_error_msg),
-                        Toast.LENGTH_SHORT
-                ).show();
-
-                stopLoading();
-                return;
-            }
-
-            mPagesLoaded++;
-
-            stopLoading();
-
-            mImages.addAll(xs);
-        }
-
-    }
-
-    private void startLoading() {
-        if (mIsLoading) {
-            return;
-        }
-
-        if (mPagesLoaded >= MAX_PAGES) {
-            return;
-        }
-
-        mIsLoading = true;
-
-        if (mLoading != null) {
-            mLoading.setVisibility(View.VISIBLE);
-        }
-
-        new FetchPageTask().execute(mPagesLoaded + 1);
-    }
-
-    private void stopLoading() {
-        if (!mIsLoading) {
-            return;
-        }
-
-        mIsLoading = false;
-
-        if (mLoading != null) {
-            mLoading.setVisibility(View.GONE);
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_main, container, false);
-
-        mImages = new ImageAdapter(getActivity());
-        mLoading = (TextView) view.findViewById(R.id.loading);
-
-        initGrid(view);
-
-        startLoading();
-
-        return view;
-    }
-
-    private void initGrid(View view) {
-        GridView gridview = (GridView) view.findViewById(R.id.grid_view);
-
-        if (gridview == null) {
-            return;
-        }
-
-        gridview.setAdapter(mImages);
-
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent,
-                                    View v,
-                                    int position,
-                                    long id) {
-
-                ImageAdapter adapter = (ImageAdapter) parent.getAdapter();
-                Movie movie = adapter.getItem(position);
-
-                if (movie == null) {
-                    return;
-                }
-
-                Intent intent = new Intent(getActivity(), DetailActivity.class);
-                intent.putExtra(Movie.EXTRA_MOVIE, movie.toBundle());
-                getActivity().startActivity(intent);
-            }
-        });
-
-
-        gridview.setOnScrollListener(
-                new AbsListView.OnScrollListener() {
-                    @Override
-                    public void onScrollStateChanged(AbsListView view, int scrollState) {
-
-                    }
-
-                    @Override
-                    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                        int lastInScreen = firstVisibleItem + visibleItemCount;
-                        if (lastInScreen == totalItemCount) {
-                            startLoading();
-                        }
+        protected void onPostExecute(List<Movie> movies) {
+            if (movies != null) {
+                if (mMovieGridAdapter != null) {
+                    mMovieGridAdapter.clear();
+                    for (Movie movie : movies) {
+                        mMovieGridAdapter.add(movie);
                     }
                 }
-
-        );
+                mMovies = new ArrayList<>();
+                mMovies.addAll(movies);
+            }
+        }
     }
-
 }
-
