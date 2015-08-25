@@ -1,16 +1,16 @@
 <resources>
     <string name="app_name">Popular Movies</string>
-    <string name="title_activity_main">Movies</string>
 
-    <string name="sort_menu">Settings</string>
-    <string name="sort_menu_popular">Most Popular</string>
-    <string name="sort_menu_rating">Highest Rated</string>
+    <string name="sort_settings">Sort by</string>
+    <string name="sort_settings_popular">Most Popular</string>
+    <string name="sort_settings_rating">Highest Rated</string>
 
     <string name="title_activity_detail">Movie Details</string>
 
-    <string name="vote_average">Rating:&#160;</string>
-    <string name="release_date">Release Date:&#160;</string>
-    <string name="overview">Summary:</string>
+    <string name="vote_average_title">Rating:&#160;</string>
+    <string name="release_date_title">Release Date:&#160;</string>
+    <string name="overview_title">Summary:</string>
 
-    <string name="api_key">e77793d2e5bfe91c59b0e86c54d2b9b0</string>
+
+    <string name="api_key">5d04854b4bbbca8459f508321e0e6c38</string>
 </resources>

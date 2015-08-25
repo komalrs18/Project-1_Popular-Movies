@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="app.com.shah.komal.popular_movies">
+    package="app.com.shah.komal.popular_movies_v2" >
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -24,7 +24,7 @@
             android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="app.com.shah.komal.popular_movies.MainActivity" />
+                android:value="app.com.shah.komal.popular_movies_v2.MainActivity" />
         </activity>
     </application>
 

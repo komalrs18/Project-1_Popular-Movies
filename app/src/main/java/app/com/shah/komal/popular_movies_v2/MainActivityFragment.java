@@ -1,4 +1,4 @@
-package app.com.shah.komal.popular_movies;
+package app.com.shah.komal.popular_movies_v2;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
-import app.com.shah.komal.popular_movies.adapters.MovieGridAdapter;
+import app.com.shah.komal.popular_movies_v2.adapters.MovieGridAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,11 +40,11 @@ public class MainActivityFragment extends Fragment {
     private MovieGridAdapter mMovieGridAdapter;
 
     private static final String SORT_SETTING_KEY = "sort_setting";
-    private static final String POPULAR_KEY = "popular_desc";
-    private static final String RATING_KEY = "vote_average";
+    private static final String POPULARITY_DESC = "popularity.desc";
+    private static final String RATING_DESC = "vote_average.desc";
     private static final String MOVIES_KEY = "movies";
 
-    private String mSort = POPULAR_KEY;
+    private String mSortBy = POPULARITY_DESC;
 
     private ArrayList<Movie> mMovies = null;
 
@@ -61,15 +61,15 @@ public class MainActivityFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_fragment_main, menu);
-        MenuItem sort_menu_popular = menu.findItem(R.id.sort_menu_popular);
-        MenuItem sort_menu_rating = menu.findItem(R.id.sort_menu_rating);
-        if (mSort.contentEquals(POPULAR_KEY)) {
-            if (!sort_menu_popular.isChecked())
-                sort_menu_popular.setChecked(true);
+        MenuItem sort_settings_popular = menu.findItem(R.id.sort_settings_popular);
+        MenuItem sort_settings_rating = menu.findItem(R.id.sort_settings_rating);
+        if (mSortBy.contentEquals(POPULARITY_DESC)) {
+            if (!sort_settings_popular.isChecked())
+                sort_settings_popular.setChecked(true);
         }
         else {
-            if (!sort_menu_rating.isChecked())
-                sort_menu_rating.setChecked(true);
+            if (!sort_settings_rating.isChecked())
+                sort_settings_rating.setChecked(true);
         }
     }
 
@@ -77,21 +77,21 @@ public class MainActivityFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-            case R.id.sort_menu_popular:
+            case R.id.sort_settings_popular:
                 if (item.isChecked())
                     item.setChecked(false);
                 else
                     item.setChecked(true);
-                mSort = POPULAR_KEY;
-                updateMovies(mSort);
+                mSortBy = POPULARITY_DESC;
+                updateMovies(mSortBy);
                 return true;
-            case R.id.sort_menu_rating:
+            case R.id.sort_settings_rating:
                 if (item.isChecked())
                     item.setChecked(false);
                 else
                     item.setChecked(true);
-                mSort = RATING_KEY;
-                updateMovies(mSort);
+                mSortBy = RATING_DESC;
+                updateMovies(mSortBy);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -120,7 +120,7 @@ public class MainActivityFragment extends Fragment {
 
         if (savedInstanceState != null) {
             if (savedInstanceState.containsKey(SORT_SETTING_KEY)) {
-                mSort = savedInstanceState.getString(SORT_SETTING_KEY);
+                mSortBy = savedInstanceState.getString(SORT_SETTING_KEY);
             }
             if (savedInstanceState.containsKey(MOVIES_KEY)) {
                 mMovies = savedInstanceState.getParcelableArrayList(MOVIES_KEY);
@@ -128,10 +128,10 @@ public class MainActivityFragment extends Fragment {
                     mMovieGridAdapter.add(movie);
                 }
             } else {
-                updateMovies(mSort);
+                updateMovies(mSortBy);
             }
         } else {
-            updateMovies(mSort);
+            updateMovies(mSortBy);
         }
 
         return view;
@@ -144,8 +144,8 @@ public class MainActivityFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        if (!mSort.contentEquals(POPULAR_KEY)) {
-            outState.putString(SORT_SETTING_KEY, mSort);
+        if (!mSortBy.contentEquals(POPULARITY_DESC)) {
+            outState.putString(SORT_SETTING_KEY, mSortBy);
         }
         if (mMovies != null) {
             outState.putParcelableArrayList(MOVIES_KEY, mMovies);

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="@dimen/movie_height">
+    android:layout_height="@dimen/grid_item_movie_height">
 
     <TextView
-        android:id="@+id/gridview_movie"
+        android:id="@+id/grid_item_title"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:textSize="18sp"
@@ -14,7 +14,7 @@
         android:textColor="?android:attr/textColorSecondary" />
 
     <ImageView
-        android:id="@+id/gridview_image"
+        android:id="@+id/grid_item_image"
         android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

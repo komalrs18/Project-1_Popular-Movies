@@ -1,4 +1,4 @@
-package app.com.shah.komal.popular_movies;
+package app.com.shah.komal.popular_movies_v2;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -44,13 +44,13 @@ public class DetailActivityFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
 
-        mImageView = (ImageView) rootView.findViewById(R.id.detail_image);
-        mTitleView = (TextView) rootView.findViewById(R.id.detail_title);
-        mOverviewView = (TextView) rootView.findViewById(R.id.detail_overview);
-        mDateView = (TextView) rootView.findViewById(R.id.detail_date);
-        mVoteAverageView = (TextView) rootView.findViewById(R.id.detail_vote_average);
+        mImageView = (ImageView) rootView.findViewById(R.id.thumbnail_image);
+        mTitleView = (TextView) rootView.findViewById(R.id.movie_title);
+        mDateView = (TextView) rootView.findViewById(R.id.release_date);
+        mVoteAverageView = (TextView) rootView.findViewById(R.id.vote_average);
+        mOverviewView = (TextView) rootView.findViewById(R.id.overview);
 
-        String image_url = "http://image.tmdb.org/t/p/w342" + mMovie.getImage2();
+        String image_url = "http://image.tmdb.org/t/p/w342" + mMovie.getImage();
         Glide.with(this).load(image_url).into(mImageView);
 
         mTitleView.setText(mMovie.getTitle());

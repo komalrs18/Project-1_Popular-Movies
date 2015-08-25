@@ -1,4 +1,4 @@
-package app.com.shah.komal.popular_movies.adapters;
+package app.com.shah.komal.popular_movies_v2.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,8 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import app.com.shah.komal.popular_movies.*;
-import app.com.shah.komal.popular_movies.Movie;
+import app.com.shah.komal.popular_movies_v2.*;
+import app.com.shah.komal.popular_movies_v2.Movie;
 
 
 public class MovieGridAdapter extends ArrayAdapter<Movie> {
@@ -20,8 +20,8 @@ public class MovieGridAdapter extends ArrayAdapter<Movie> {
         public final TextView titleView;
 
         public ViewHolder(View view) {
-            imageView = (ImageView) view.findViewById(R.id.gridview_image);
-            titleView = (TextView) view.findViewById(R.id.gridview_movie);
+            imageView = (ImageView) view.findViewById(R.id.grid_item_image);
+            titleView = (TextView) view.findViewById(R.id.grid_item_title);
         }
     }
 
@@ -35,7 +35,7 @@ public class MovieGridAdapter extends ArrayAdapter<Movie> {
         ViewHolder viewHolder;
 
         if (view == null) {
-            view = LayoutInflater.from(getContext()).inflate(R.layout.gridview_movie_item, parent, false);
+            view = LayoutInflater.from(getContext()).inflate(R.layout.grid_item_movie, parent, false);
             viewHolder = new ViewHolder(view);
             view.setTag(viewHolder);
         }

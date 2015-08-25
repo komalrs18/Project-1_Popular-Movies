@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:numColumns="auto_fit"
-    android:columnWidth="@dimen/movie_width"
-    android:verticalSpacing="@dimen/padding_space"
-    android:horizontalSpacing="@dimen/padding_space"
-    android:padding="@dimen/padding_space"
+    android:columnWidth="@dimen/movie_height"
+    android:verticalSpacing="@dimen/gridview_padding"
+    android:horizontalSpacing="@dimen/gridview_padding"
+    android:padding="@dimen/gridview_padding"
     android:drawSelectorOnTop="true" />

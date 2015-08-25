@@ -1,4 +1,4 @@
-package app.com.shah.komal.popular_movies;
+package app.com.shah.komal.popular_movies_v2;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -20,7 +20,7 @@ public class DetailActivity extends AppCompatActivity {
             fragment.setArguments(arguments);
 
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.activity_detail, fragment)
+                    .add(R.id.movie_detail_container, fragment)
                     .commit();
         }
     }
