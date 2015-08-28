@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ListView;
 
 import app.com.shah.komal.popular_movies_v2.adapters.MovieGridAdapter;
 
@@ -44,6 +45,9 @@ public class MainActivityFragment extends Fragment {
     private static final String RATING_DESC = "vote_average.desc";
     private static final String MOVIES_KEY = "movies";
 
+    private int mPosition = ListView.INVALID_POSITION;
+
+    private static final String SELECTED_KEY = "selected_position";
     private String mSortBy = POPULARITY_DESC;
 
     private ArrayList<Movie> mMovies = null;
@@ -119,10 +123,12 @@ public class MainActivityFragment extends Fragment {
         });
 
         if (savedInstanceState != null) {
-            if (savedInstanceState.containsKey(SORT_SETTING_KEY)) {
+            if (savedInstanceState.containsKey(SORT_SETTING_KEY) && savedInstanceState.containsKey(SELECTED_KEY)) {
                 mSortBy = savedInstanceState.getString(SORT_SETTING_KEY);
+                mPosition = savedInstanceState.getInt(SELECTED_KEY);
             }
-            if (savedInstanceState.containsKey(MOVIES_KEY)) {
+            if (savedInstanceState.containsKey(MOVIES_KEY)&& savedInstanceState.containsKey(SELECTED_KEY)) {
+                mPosition = savedInstanceState.getInt(SELECTED_KEY);
                 mMovies = savedInstanceState.getParcelableArrayList(MOVIES_KEY);
                 for (Movie movie : mMovies) {
                     mMovieGridAdapter.add(movie);
@@ -144,6 +150,12 @@ public class MainActivityFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
+        // When tablets rotate, the currently selected list item needs to be saved.
+        // When no item is selected, mPosition will be set to Listview.INVALID_POSITION,
+        // so check for that before storing.
+        if (mPosition != ListView.INVALID_POSITION) {
+            outState.putInt(SELECTED_KEY, mPosition);
+        }
         if (!mSortBy.contentEquals(POPULARITY_DESC)) {
             outState.putString(SORT_SETTING_KEY, mSortBy);
         }
