@@ -1,4 +1,4 @@
-package app.com.shah.komal.popular_movies_v2;
+package app.com.shah.komal.popular_movies_v3.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

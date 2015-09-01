@@ -1,4 +1,4 @@
-package app.com.shah.komal.popular_movies_v2;
+package app.com.shah.komal.popular_movies_v3;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import app.com.shah.komal.popular_movies_v3.model.Movie;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -46,9 +47,9 @@ public class DetailActivityFragment extends Fragment {
 
         mImageView = (ImageView) rootView.findViewById(R.id.thumbnail_image);
         mTitleView = (TextView) rootView.findViewById(R.id.movie_title);
+        mOverviewView = (TextView) rootView.findViewById(R.id.overview);
         mDateView = (TextView) rootView.findViewById(R.id.release_date);
         mVoteAverageView = (TextView) rootView.findViewById(R.id.vote_average);
-        mOverviewView = (TextView) rootView.findViewById(R.id.overview);
 
         String image_url = "http://image.tmdb.org/t/p/w342" + mMovie.getImage();
         Glide.with(this).load(image_url).into(mImageView);

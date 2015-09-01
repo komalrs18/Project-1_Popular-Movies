@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:numColumns="auto_fit"
-    android:columnWidth="@dimen/movie_height"
+    android:columnWidth="@dimen/grid_item_movie_width"
     android:verticalSpacing="@dimen/gridview_padding"
     android:horizontalSpacing="@dimen/gridview_padding"
     android:padding="@dimen/gridview_padding"

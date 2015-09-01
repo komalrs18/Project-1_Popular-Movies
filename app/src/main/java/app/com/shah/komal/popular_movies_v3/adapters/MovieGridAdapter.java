@@ -1,4 +1,4 @@
-package app.com.shah.komal.popular_movies_v2.adapters;
+package app.com.shah.komal.popular_movies_v3.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,8 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import app.com.shah.komal.popular_movies_v2.*;
-import app.com.shah.komal.popular_movies_v2.Movie;
+import app.com.shah.komal.popular_movies_v3.*;
+import app.com.shah.komal.popular_movies_v3.model.Movie;
 
 
 public class MovieGridAdapter extends ArrayAdapter<Movie> {

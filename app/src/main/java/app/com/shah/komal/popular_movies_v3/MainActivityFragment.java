@@ -1,4 +1,4 @@
-package app.com.shah.komal.popular_movies_v2;
+package app.com.shah.komal.popular_movies_v3;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -14,9 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ListView;
 
-import app.com.shah.komal.popular_movies_v2.adapters.MovieGridAdapter;
+import app.com.shah.komal.popular_movies_v3.adapters.MovieGridAdapter;
+import app.com.shah.komal.popular_movies_v3.model.Movie;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,9 +45,6 @@ public class MainActivityFragment extends Fragment {
     private static final String RATING_DESC = "vote_average.desc";
     private static final String MOVIES_KEY = "movies";
 
-    private int mPosition = ListView.INVALID_POSITION;
-
-    private static final String SELECTED_KEY = "selected_position";
     private String mSortBy = POPULARITY_DESC;
 
     private ArrayList<Movie> mMovies = null;
@@ -65,15 +62,15 @@ public class MainActivityFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_fragment_main, menu);
-        MenuItem sort_settings_popular = menu.findItem(R.id.sort_settings_popular);
-        MenuItem sort_settings_rating = menu.findItem(R.id.sort_settings_rating);
+        MenuItem action_sort_by_popularity = menu.findItem(R.id.action_sort_by_popularity);
+        MenuItem action_sort_by_rating = menu.findItem(R.id.action_sort_by_rating);
         if (mSortBy.contentEquals(POPULARITY_DESC)) {
-            if (!sort_settings_popular.isChecked())
-                sort_settings_popular.setChecked(true);
+            if (!action_sort_by_popularity.isChecked())
+                action_sort_by_popularity.setChecked(true);
         }
         else {
-            if (!sort_settings_rating.isChecked())
-                sort_settings_rating.setChecked(true);
+            if (!action_sort_by_rating.isChecked())
+                action_sort_by_rating.setChecked(true);
         }
     }
 
@@ -81,7 +78,7 @@ public class MainActivityFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-            case R.id.sort_settings_popular:
+            case R.id.action_sort_by_popularity:
                 if (item.isChecked())
                     item.setChecked(false);
                 else
@@ -89,7 +86,7 @@ public class MainActivityFragment extends Fragment {
                 mSortBy = POPULARITY_DESC;
                 updateMovies(mSortBy);
                 return true;
-            case R.id.sort_settings_rating:
+            case R.id.action_sort_by_rating:
                 if (item.isChecked())
                     item.setChecked(false);
                 else
@@ -123,12 +120,10 @@ public class MainActivityFragment extends Fragment {
         });
 
         if (savedInstanceState != null) {
-            if (savedInstanceState.containsKey(SORT_SETTING_KEY) && savedInstanceState.containsKey(SELECTED_KEY)) {
+            if (savedInstanceState.containsKey(SORT_SETTING_KEY)) {
                 mSortBy = savedInstanceState.getString(SORT_SETTING_KEY);
-                mPosition = savedInstanceState.getInt(SELECTED_KEY);
             }
-            if (savedInstanceState.containsKey(MOVIES_KEY)&& savedInstanceState.containsKey(SELECTED_KEY)) {
-                mPosition = savedInstanceState.getInt(SELECTED_KEY);
+            if (savedInstanceState.containsKey(MOVIES_KEY)) {
                 mMovies = savedInstanceState.getParcelableArrayList(MOVIES_KEY);
                 for (Movie movie : mMovies) {
                     mMovieGridAdapter.add(movie);
@@ -150,12 +145,6 @@ public class MainActivityFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        // When tablets rotate, the currently selected list item needs to be saved.
-        // When no item is selected, mPosition will be set to Listview.INVALID_POSITION,
-        // so check for that before storing.
-        if (mPosition != ListView.INVALID_POSITION) {
-            outState.putInt(SELECTED_KEY, mPosition);
-        }
         if (!mSortBy.contentEquals(POPULARITY_DESC)) {
             outState.putString(SORT_SETTING_KEY, mSortBy);
         }

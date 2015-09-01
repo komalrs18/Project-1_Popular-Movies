@@ -1,4 +1,4 @@
-package app.com.shah.komal.popular_movies_v2;
+package app.com.shah.komal.popular_movies_v3;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
